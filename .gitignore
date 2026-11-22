@@ -1,6 +1,7 @@
 .venv/
 __pycache__/
 *.pyc
+.ipynb_checkpoints/
 
 datasets/raw/
 datasets/reviewed/
@@ -9,6 +10,17 @@ datasets/processed/
 checkpoints/
 *.pt
 *.pth
+
+datasets/
+checkpoints/
+results/
+runs/
+*.pt
+*.pth
+*.onnx
+
+.vscode/
+.idea/
 
 experiments/
 results/

@@ -1,3 +1,4 @@
+from app.services.analytics import analyze_results
 import gradio as gr
 
 from app.services.detector import (
@@ -167,5 +168,81 @@ with gr.Blocks(title="RescueVisionLab") as demo:
         ]
     )
 
+    gr.Markdown("---")
+    gr.Markdown(
+        """
+        # Аналитика и оценка моделей
+
+        Загрузка результатов экспериментов,
+        визуализация обучения и сравнение методов обнаружения.
+        """
+    )
+
+    with gr.Tab("История обучения"):
+
+        gr.Markdown(
+            """
+            Загрузите CSV с результатами обучения.
+            Необходимые столбцы: epoch, train_loss, val_loss.
+            """
+        )
+
+        history_file = gr.File(
+            label="CSV: история обучения",
+            file_types=[".csv"],
+            type="filepath"
+        )
+
+        history_chart = gr.Image(
+            label="График Train Loss и Validation Loss"
+        )
+
+    with gr.Tab("Сравнение моделей"):
+
+        gr.Markdown(
+            """
+            Загрузите CSV с результатами оценки пяти методов.
+            Значения метрик должны находиться в диапазоне от 0 до 1.
+            """
+        )
+
+        metrics_file = gr.File(
+            label="CSV: результаты оценки моделей",
+            file_types=[".csv"],
+            type="filepath"
+        )
+
+        comparison_chart = gr.Image(
+            label="Сравнение качества моделей"
+        )
+
+        comparison_table = gr.Dataframe(
+            label="Таблица сравнительной оценки",
+            interactive=False
+        )
+
+    analytics_status = gr.Textbox(
+        label="Состояние аналитики",
+        lines=5
+    )
+
+    analytics_button = gr.Button(
+        "Построить графики и таблицу",
+        variant="primary"
+    )
+
+    analytics_button.click(
+        fn=analyze_results,
+        inputs=[
+            history_file,
+            metrics_file
+        ],
+        outputs=[
+            history_chart,
+            comparison_chart,
+            comparison_table,
+            analytics_status
+        ]
+    )
 if __name__ == "__main__":
     demo.launch()

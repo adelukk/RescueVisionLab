@@ -11,8 +11,13 @@ from ultralytics import YOLO
 from src.models.factory import create_model
 
 
+import os
+
 DEFAULT_CHECKPOINTS = Path(
-    r"C:\RescueVisionLab_Shared\checkpoints"
+    os.environ.get(
+        "RESCUEVISION_CHECKPOINTS",
+        r"C:\RescueVisionLab_Shared\checkpoints",
+    )
 )
 
 MODEL_NAMES = (
@@ -28,7 +33,7 @@ def get_device():
     return "cuda" if torch.cuda.is_available() else "cpu"
 
 
-@lru_cache(maxsize=5)
+@lru_cache(maxsize=1)
 def load_model(model_name, checkpoint_root=None):
     if model_name not in MODEL_NAMES:
         raise ValueError(f"Unknown model: {model_name}")

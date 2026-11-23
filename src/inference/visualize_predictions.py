@@ -12,7 +12,7 @@ DATASET_DIR = Path(
     r"C:\RescueVisionLab_Shared\dataset\pdd\images\test"
 )
 
-OUTPUT_DIR = Path("results/visualizations_conf50")
+OUTPUT_DIR = Path("results/visualizations")
 
 MODELS = [
     "yolo26n",
@@ -62,7 +62,7 @@ def main():
             result = predict(
                 image=image,
                 model_name=model_name,
-                confidence=0.50,
+                confidence=0.25,
             )
 
             visualization = draw_predictions(

@@ -4,7 +4,7 @@ import gc
 
 import torch
 
-from src.inference.predictor import predict, load_model
+from src.inference.predictor import predict, clear_model_cache
 
 
 TEST_DIR = Path(
@@ -50,7 +50,7 @@ def main():
 
         finally:
             # Release cached models between tests
-            load_model.cache_clear()
+            clear_model_cache()
             gc.collect()
 
             if torch.cuda.is_available():

@@ -9,7 +9,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from src.data.detection_dataset import PDDDataset, collate_fn
+from src.data.detection_dataset import CombinedDataset, collate_fn
 from src.models.factory import MODEL_NAMES, create_model
 
 
@@ -22,7 +22,7 @@ def set_seed(seed):
 
 
 def make_loader(split, batch, workers, shuffle=False):
-    dataset = PDDDataset(split=split)
+    dataset = CombinedDataset(split=split)
     return DataLoader(
         dataset,
         batch_size=batch,

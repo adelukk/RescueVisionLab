@@ -29,7 +29,7 @@ def main():
     model = YOLO("yolo26n.yaml")
 
     model.train(
-        data="configs/pdd.yaml",
+        data="datasets/processed/combined_yolo/data.yaml",
         epochs=args.epochs,
         batch=args.batch,
         imgsz=args.imgsz,

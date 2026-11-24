@@ -4,20 +4,17 @@ import gc
 
 import torch
 
-from src.inference.predictor import predict, clear_model_cache
+from src.inference.predictor import (
+    MODEL_NAMES,
+    predict,
+    clear_model_cache,
+)
 
 
 TEST_DIR = Path(
     r"C:\RescueVisionLab_Shared\dataset\pdd\images\test"
 )
 
-MODEL_NAMES = [
-    "yolo26n",
-    "fasterrcnn",
-    "retinanet",
-    "ssd300",
-    "fcos",
-]
 
 
 def main():

@@ -5,7 +5,11 @@ import gc
 import torch
 from PIL import Image, ImageDraw, ImageFont
 
-from src.inference.predictor import predict, clear_model_cache
+from src.inference.predictor import (
+    MODEL_NAMES,
+    predict,
+    clear_model_cache,
+)
 
 
 DATASET_DIR = Path(
@@ -14,13 +18,6 @@ DATASET_DIR = Path(
 
 OUTPUT_DIR = Path("results/visualizations")
 
-MODELS = [
-    "yolo26n",
-    "fasterrcnn",
-    "retinanet",
-    "ssd300",
-    "fcos",
-]
 
 
 def draw_predictions(image, result):
@@ -55,7 +52,7 @@ def main():
 
     print("Image:", image_path)
 
-    for model_name in MODELS:
+    for model_name in MODEL_NAMES:
         print("Processing:", model_name)
 
         try:

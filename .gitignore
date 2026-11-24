@@ -1,33 +1,26 @@
+# Python
 .venv/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
-datasets/raw/
-datasets/reviewed/
-datasets/processed/
-
-checkpoints/
-*.pt
-*.pth
-
+# Datasets
 datasets/
+
+# Model checkpoints
 checkpoints/
-results/
 runs/
 *.pt
 *.pth
 *.onnx
 
-.vscode/
-.idea/
-
-experiments/
+# Generated results
 results/
+experiments/
+
+# Old project files
 legacy/
 
-*.mp4
-*.avi
-*.mov
-
-.env
+# IDE
+.vscode/
+.idea/

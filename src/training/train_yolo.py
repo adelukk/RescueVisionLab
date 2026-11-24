@@ -1,4 +1,5 @@
 import argparse
+
 from ultralytics import YOLO
 
 
@@ -8,13 +9,13 @@ def main():
     parser.add_argument(
         "--epochs",
         type=int,
-        default=1,
+        default=30,
     )
 
     parser.add_argument(
         "--batch",
         type=int,
-        default=2,
+        default=8,
     )
 
     parser.add_argument(
@@ -23,9 +24,21 @@ def main():
         default=640,
     )
 
+    parser.add_argument(
+        "--name",
+        type=str,
+        default="yolo26n_final",
+    )
+
     args = parser.parse_args()
 
-    # Создаём модель с нуля.
+    print("Starting final YOLO26n training from scratch.")
+    print(f"Epochs: {args.epochs}")
+    print(f"Batch: {args.batch}")
+    print(f"Image size: {args.imgsz}")
+    print(f"Run name: {args.name}")
+
+    # Создаём архитектуру YOLO26n без предобученных весов.
     model = YOLO("yolo26n.yaml")
 
     model.train(
@@ -37,8 +50,8 @@ def main():
         workers=2,
         seed=42,
         project="runs/rescuevision",
-        name="yolo26n",
-        exist_ok=True,
+        name=args.name,
+        exist_ok=False,
         pretrained=False,
     )
 

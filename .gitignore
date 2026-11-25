@@ -31,3 +31,10 @@ legacy/
 
 # Final checkpoints archive for local transfer
 RescueVisionLab_final_checkpoints.zip
+
+# Local research intermediate outputs
+results_final/research/predictions/
+results_final/research/models_comparison.csv
+results_final/research/models_comparison.json
+results_final/research/test_metrics.csv
+results_final/research/validation_metrics.csv

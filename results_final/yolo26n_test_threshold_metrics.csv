@@ -1,0 +1,2 @@
+model,split,precision,recall,score_threshold,iou_threshold,tp,fp,fn
+yolo26n,test,0.9577464788732394,0.20795107033639143,0.5,0.5,68,3,259

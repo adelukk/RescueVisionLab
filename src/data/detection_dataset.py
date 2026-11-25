@@ -96,3 +96,152 @@ class PDDDataset(Dataset):
 
 def collate_fn(batch):
     return tuple(zip(*batch))
+
+class CombinedDataset(Dataset):
+    def __init__(
+        self,
+        manifest="datasets/raw/combined_sources/combined_split.json",
+        split="train",
+    ):
+        import json
+
+        if split not in ("train", "val", "test"):
+            raise ValueError(f"Unknown split: {split}")
+
+        self.project_root = Path(__file__).resolve().parents[2]
+        self.manifest_path = (
+            self.project_root / manifest
+        )
+
+        if not self.manifest_path.is_file():
+            raise FileNotFoundError(self.manifest_path)
+
+        data = json.loads(
+            self.manifest_path.read_text(encoding="utf-8")
+        )
+
+        self.records = data[split]
+        self.split = split
+
+        if not self.records:
+            raise RuntimeError(
+                f"No records in split: {split}"
+            )
+
+        print(
+            f"CombinedDataset {split}: "
+            f"{len(self.records)} images"
+        )
+
+    def __len__(self):
+        return len(self.records)
+
+    def __getitem__(self, index):
+        record = self.records[index]
+
+        image_path = (
+            self.project_root / record["image_path"]
+        )
+        label_path = (
+            self.project_root / record["label_path"]
+        )
+
+        with Image.open(image_path) as im:
+            image = im.convert("RGB")
+
+        width, height = image.size
+        boxes = []
+
+        for line_number, line in enumerate(
+            label_path.read_text(
+                encoding="utf-8-sig"
+            ).splitlines(),
+            1,
+        ):
+            if not line.strip():
+                continue
+
+            values = line.split()
+
+            if len(values) != 5:
+                raise ValueError(
+                    f"Invalid label: "
+                    f"{label_path}:{line_number}"
+                )
+
+            cls = int(values[0])
+            xc, yc, bw, bh = map(
+                float, values[1:]
+            )
+
+            if cls != 0:
+                raise ValueError(
+                    f"Unexpected class {cls}: "
+                    f"{label_path}"
+                )
+
+            if not all(
+                0 <= value <= 1
+                for value in (xc, yc, bw, bh)
+            ):
+                raise ValueError(
+                    f"Coordinates out of range: "
+                    f"{label_path}"
+                )
+
+            x1 = max(
+                0.0,
+                (xc - bw / 2) * width,
+            )
+            y1 = max(
+                0.0,
+                (yc - bh / 2) * height,
+            )
+            x2 = min(
+                float(width),
+                (xc + bw / 2) * width,
+            )
+            y2 = min(
+                float(height),
+                (yc + bh / 2) * height,
+            )
+
+            if x2 <= x1 or y2 <= y1:
+                raise ValueError(
+                    f"Invalid box: {label_path}"
+                )
+
+            boxes.append(
+                [x1, y1, x2, y2]
+            )
+
+        boxes = torch.tensor(
+            boxes,
+            dtype=torch.float32,
+        ).reshape(-1, 4)
+
+        # Torchvision reserves class 0 for background,
+        # therefore person = 1 here.
+        labels = torch.ones(
+            len(boxes),
+            dtype=torch.int64,
+        )
+
+        target = {
+            "boxes": boxes,
+            "labels": labels,
+            "image_id": torch.tensor(
+                index,
+                dtype=torch.int64,
+            ),
+            "area": (
+                (boxes[:, 2] - boxes[:, 0])
+                * (boxes[:, 3] - boxes[:, 1])
+            ),
+            "iscrowd": torch.zeros(
+                len(boxes),
+                dtype=torch.int64,
+            ),
+        }
+
+        return to_tensor(image), target

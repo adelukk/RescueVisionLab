@@ -9,6 +9,10 @@ datasets/
 
 # Model checkpoints
 checkpoints/
+checkpoints_final/
+checkpoints_amp_test/
+checkpoints_amp_test_frcnn/
+final_checkpoints/
 runs/
 *.pt
 *.pth

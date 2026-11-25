@@ -13,7 +13,7 @@ from ultralytics import YOLO
 from src.models.factory import create_model
 
 
-MODEL_NAMES = ("yolo26n", "fasterrcnn", "retinanet", "ssd300", "fcos")
+MODEL_NAMES = ("yolo26n", "fasterrcnn", "retinanet")
 
 DEFAULT_CHECKPOINTS = Path(
     os.environ.get(

@@ -1,0 +1,2 @@
+model,split,checkpoint_epoch,map50,map50_95,map75,precision,recall,score_threshold,iou_threshold,tp,fp,fn
+retinanet,test,10,0.5994651913642883,0.26084792613983154,0.1650957465171814,0.8758169934640523,0.40978593272171254,0.5,0.5,134,19,193

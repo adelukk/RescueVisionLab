@@ -4,7 +4,7 @@ import cv2
 import gradio as gr
 import numpy as np
 from PIL import Image
-from app.services.analytics import analyze_results
+from app.services.analytics import HISTORY_FILES, load_model_comparison, load_training_history
 from app.services.detector import AVAILABLE_MODELS, detect_people
 from app.services.preprocessing import preprocess_image
 
@@ -476,83 +476,37 @@ with gr.Blocks(title="RescueVisionLab") as demo:
     # --------------------------------------------------
 
     with gr.Tab("Аналитика"):
-
-        gr.Markdown(
-            """
-            ## Аналитика и оценка моделей
-
-            Загрузка результатов экспериментов,
-            визуализация обучения и сравнение качества моделей.
-            """
-        )
-
         with gr.Tab("История обучения"):
-
-            gr.Markdown(
-                """
-                Загрузите CSV с историей обучения.
-
-                Необходимые столбцы: epoch, train_loss, val_loss.
-                """
+            history_model = gr.Dropdown(
+                choices=list(HISTORY_FILES),
+                value="YOLO26n",
+                label="Модель",
             )
+            history_chart = gr.Image(label="Графики по эпохам", interactive=False)
+            history_status = gr.Textbox(label="История обучения", interactive=False)
 
-            history_file = gr.File(
-                label="CSV: история обучения",
-                file_types=[".csv"],
-                type="filepath"
-            )
-
-            history_chart = gr.Image(
-                label="График Train Loss и Validation Loss"
+            history_model.change(
+                fn=load_training_history,
+                inputs=history_model,
+                outputs=[history_chart, history_status],
             )
 
         with gr.Tab("Сравнение моделей"):
-
-            gr.Markdown(
-                """
-                Загрузите CSV с результатами оценки моделей.
-
-                Значения метрик должны находиться в диапазоне от 0 до 1.
-                """
-            )
-
-            metrics_file = gr.File(
-                label="CSV: результаты оценки моделей",
-                file_types=[".csv"],
-                type="filepath"
-            )
-
-            comparison_chart = gr.Image(
-                label="Сравнение качества моделей"
-            )
-
+            comparison_chart = gr.Image(label="Итоговые метрики", interactive=False)
             comparison_table = gr.Dataframe(
-                label="Таблица сравнительной оценки",
-                interactive=False
+                label="Итоговая таблица",
+                interactive=False,
             )
+            comparison_status = gr.Markdown()
 
-        analytics_status = gr.Textbox(
-            label="Состояние аналитики",
-            lines=5
+        demo.load(
+            fn=load_training_history,
+            inputs=history_model,
+            outputs=[history_chart, history_status],
         )
-
-        analytics_button = gr.Button(
-            "Построить графики и таблицу",
-            variant="primary"
-        )
-
-        analytics_button.click(
-            fn=analyze_results,
-            inputs=[
-                history_file,
-                metrics_file
-            ],
-            outputs=[
-                history_chart,
-                comparison_chart,
-                comparison_table,
-                analytics_status
-            ]
+        demo.load(
+            fn=load_model_comparison,
+            outputs=[comparison_chart, comparison_table, comparison_status],
         )
 
 if __name__ == "__main__":

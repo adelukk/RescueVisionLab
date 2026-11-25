@@ -28,3 +28,6 @@ legacy/
 # IDE
 .vscode/
 .idea/
+
+# Final checkpoints archive for local transfer
+RescueVisionLab_final_checkpoints.zip

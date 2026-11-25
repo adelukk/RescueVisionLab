@@ -11,22 +11,17 @@ AVAILABLE_MODELS = [
     "YOLO",
     "Faster R-CNN",
     "RetinaNet",
-    "SSD300",
-    "FCOS",
 ]
 
 MODEL_MAPPING = {
     "YOLO": "yolo26n",
     "Faster R-CNN": "fasterrcnn",
     "RetinaNet": "retinanet",
-    "SSD300": "ssd300",
-    "FCOS": "fcos",
 }
 
 CHECKPOINT_ROOT = (
     Path(__file__).resolve().parents[2]
-    / "checkpoints"
-    / "checkpoints"
+    / "final_checkpoints"
 )
 
 

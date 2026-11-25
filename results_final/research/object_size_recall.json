@@ -1,0 +1,53 @@
+{
+  "yolo26n": {
+    "small": {
+      "count": 6,
+      "tp": 0,
+      "recall": 0.0
+    },
+    "medium": {
+      "count": 64,
+      "tp": 23,
+      "recall": 0.3594
+    },
+    "large": {
+      "count": 257,
+      "tp": 100,
+      "recall": 0.3891
+    }
+  },
+  "fasterrcnn": {
+    "small": {
+      "count": 6,
+      "tp": 1,
+      "recall": 0.1667
+    },
+    "medium": {
+      "count": 64,
+      "tp": 9,
+      "recall": 0.1406
+    },
+    "large": {
+      "count": 257,
+      "tp": 102,
+      "recall": 0.3969
+    }
+  },
+  "retinanet": {
+    "small": {
+      "count": 6,
+      "tp": 1,
+      "recall": 0.1667
+    },
+    "medium": {
+      "count": 64,
+      "tp": 15,
+      "recall": 0.2344
+    },
+    "large": {
+      "count": 257,
+      "tp": 129,
+      "recall": 0.5019
+    }
+  }
+}

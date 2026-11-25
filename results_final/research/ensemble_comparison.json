@@ -1,0 +1,98 @@
+{
+  "yolo26n_retinanet": {
+    "ensemble": "yolo26n_retinanet",
+    "models": "yolo26n+retinanet",
+    "weights": "0.65,0.35",
+    "iou_thr": 0.55,
+    "best_conf_val": 0.15,
+    "val_f1_at_best_conf": 0.3034,
+    "test_precision_0.25": 0.6952,
+    "test_recall_0.25": 0.3976,
+    "test_f1_0.25": 0.5058,
+    "test_AP50": 0.665,
+    "test_AP75": 0.2948,
+    "test_mAP50_95": 0.334,
+    "test_tuned_f1": 0.4854,
+    "mean_fusion_ms": 13.943,
+    "test_at_tuned_conf": {
+      "precision": 0.4462,
+      "recall": 0.5321,
+      "f1": 0.4854,
+      "AP50": 0.665,
+      "AP75": 0.2948,
+      "mAP50_95": 0.334
+    }
+  },
+  "yolo26n_fasterrcnn": {
+    "ensemble": "yolo26n_fasterrcnn",
+    "models": "yolo26n+fasterrcnn",
+    "weights": "0.7,0.3",
+    "iou_thr": 0.55,
+    "best_conf_val": 0.15,
+    "val_f1_at_best_conf": 0.2757,
+    "test_precision_0.25": 0.6774,
+    "test_recall_0.25": 0.3853,
+    "test_f1_0.25": 0.4912,
+    "test_AP50": 0.616,
+    "test_AP75": 0.2828,
+    "test_mAP50_95": 0.3089,
+    "test_tuned_f1": 0.4369,
+    "mean_fusion_ms": 6.34,
+    "test_at_tuned_conf": {
+      "precision": 0.3927,
+      "recall": 0.4924,
+      "f1": 0.4369,
+      "AP50": 0.616,
+      "AP75": 0.2828,
+      "mAP50_95": 0.3089
+    }
+  },
+  "retinanet_fasterrcnn": {
+    "ensemble": "retinanet_fasterrcnn",
+    "models": "retinanet+fasterrcnn",
+    "weights": "0.6,0.4",
+    "iou_thr": 0.55,
+    "best_conf_val": 0.2,
+    "val_f1_at_best_conf": 0.19,
+    "test_precision_0.25": 0.2571,
+    "test_recall_0.25": 0.4404,
+    "test_f1_0.25": 0.3247,
+    "test_AP50": 0.542,
+    "test_AP75": 0.1453,
+    "test_mAP50_95": 0.2215,
+    "test_tuned_f1": 0.2748,
+    "mean_fusion_ms": 10.597,
+    "test_at_tuned_conf": {
+      "precision": 0.1901,
+      "recall": 0.4954,
+      "f1": 0.2748,
+      "AP50": 0.542,
+      "AP75": 0.1453,
+      "mAP50_95": 0.2215
+    }
+  },
+  "three_models": {
+    "ensemble": "three_models",
+    "models": "yolo26n+retinanet+fasterrcnn",
+    "weights": "0.55,0.3,0.15",
+    "iou_thr": 0.55,
+    "best_conf_val": 0.15,
+    "val_f1_at_best_conf": 0.2862,
+    "test_precision_0.25": 0.6066,
+    "test_recall_0.25": 0.3914,
+    "test_f1_0.25": 0.4758,
+    "test_AP50": 0.6485,
+    "test_AP75": 0.2721,
+    "test_mAP50_95": 0.3235,
+    "test_tuned_f1": 0.4502,
+    "mean_fusion_ms": 20.195,
+    "test_at_tuned_conf": {
+      "precision": 0.3765,
+      "recall": 0.5596,
+      "f1": 0.4502,
+      "AP50": 0.6485,
+      "AP75": 0.2721,
+      "mAP50_95": 0.3235
+    }
+  }
+}

@@ -1,0 +1,10 @@
+model,size_category,count,tp,recall
+yolo26n,small,6,0,0.0
+yolo26n,medium,64,23,0.3594
+yolo26n,large,257,100,0.3891
+fasterrcnn,small,6,1,0.1667
+fasterrcnn,medium,64,9,0.1406
+fasterrcnn,large,257,102,0.3969
+retinanet,small,6,1,0.1667
+retinanet,medium,64,15,0.2344
+retinanet,large,257,129,0.5019
